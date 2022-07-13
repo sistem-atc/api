@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Country;
+use App\Models\County;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -15,7 +15,7 @@ class CountryController extends Controller
      */
     public function index()
     {
-        return Country::all();
+        return County::all();
     }
 
     /**
@@ -29,13 +29,15 @@ class CountryController extends Controller
 
         try{
             $request->validate([
-            'user' => 'required',
+                'countryid' => 'required',
+                'countryname' => 'required',
+                'user' => 'required'
             ]);
         }catch (\Illuminate\Validation\ValidationException $e){
             return $e->errors();
         }
 
-        return Country::create($request->all());
+        return County::create($request->all());
         
     }
 
@@ -47,7 +49,7 @@ class CountryController extends Controller
      */
     public function show($codigocountry)
     {
-        return Country::where('Tabela', $codigocountry)->get(); 
+        return County::where('countryid', $codigocountry)->get(); 
     }
 
     /**
@@ -61,10 +63,12 @@ class CountryController extends Controller
     {
         
         $request->validate([
-            'user' => 'required',
+            'countryid' => 'required',
+            'countryname' => 'required',
+            'user' => 'required'
         ]);
 
-        return Country::where('Tabela', $codigocountry)->update($request->all()); 
+        return County::where('countryid', $codigocountry)->update($request->all()); 
         
     }
 
@@ -77,8 +81,8 @@ class CountryController extends Controller
     public function destroy($codigocountry)
     {
         
-        $country =  Client::where('Tabela', 'like', $codigocountry)->get();
-        return Client::destroy($country);
+        $country =  County::where('countryid', 'like', $codigocountry)->get();
+        return County::destroy($country);
         
     }
 }

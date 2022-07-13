@@ -29,7 +29,9 @@ class UfController extends Controller
         
         try{
             $request->validate([
-            'user' => 'required',
+                'name' => 'required',
+                'uf' => 'required',
+                'user' => 'required'
             ]);
         }catch (\Illuminate\Validation\ValidationException $e){
             return $e->errors();
@@ -47,7 +49,7 @@ class UfController extends Controller
      */
     public function show($codigouf)
     {
-        return Uf::where('Tabela', $codigouf)->get(); 
+        return Uf::where('uf', $codigouf)->get(); 
     }
 
     /**
@@ -61,10 +63,12 @@ class UfController extends Controller
     {
         
         $request->validate([
-            'user' => 'required',
-        ]);
+            'name' => 'required',
+            'uf' => 'required',
+            'user' => 'required'
+    ]);
 
-        return Uf::where('Tabela', $codigouf)->update($request->all()); 
+        return Uf::where('uf', $codigouf)->update($request->all()); 
 
     }
 
@@ -77,7 +81,7 @@ class UfController extends Controller
     public function destroy($codigouf)
     {
         
-        $ufcod =  Client::where('Tabela', 'like', $codigouf)->get();
+        $ufcod =  Client::where('uf', 'like', $codigouf)->get();
         return Uf::destroy($ufcod);
 
     }
